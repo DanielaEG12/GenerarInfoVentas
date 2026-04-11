@@ -1,5 +1,0 @@
-CC;1831451601;Elena;Perez
-CC;1375722241;Luis;Rodriguez
-CC;1043228093;Elena;Lopez
-CC;1780367769;Elena;Lopez
-CC;1696906643;Luis;Gomez
