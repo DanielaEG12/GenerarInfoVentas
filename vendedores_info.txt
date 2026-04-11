@@ -1,0 +1,5 @@
+CC;1347873392;Ana;Gomez
+CC;1611228040;Maria;Gomez
+CC;1210875488;Carlos;Lopez
+CC;1588494344;Carlos;Garcia
+CC;1590932135;Ana;Lopez

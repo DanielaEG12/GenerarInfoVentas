@@ -1,0 +1,10 @@
+1;Laptop Mod-1;6971
+2;Teclado Mod-2;21967
+3;Teclado Mod-3;68864
+4;Monitor Mod-4;53285
+5;Webcam Mod-5;47058
+6;Mouse Mod-6;73942
+7;Laptop Mod-7;79566
+8;Monitor Mod-8;86191
+9;Teclado Mod-9;10928
+10;Monitor Mod-10;61900

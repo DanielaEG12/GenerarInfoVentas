@@ -7,7 +7,7 @@ import java.util.*;
  * Esta clase lee los archivos generados, procesa totales y genera reportes CSV.
  * @author Daniela Escobar, Alvaro Enrique moreno
  */
-public class main {
+public class Main {
 
     public static void main(String[] args) {
         Map<Integer, String[]> infoProductos = new HashMap<>();
@@ -87,11 +87,19 @@ public class main {
         List<Map.Entry<Long, Double>> lista = new ArrayList<>(totales.entrySet());
         lista.sort((a, b) -> b.getValue().compareTo(a.getValue()));
 
-        try (PrintWriter writer = new PrintWriter(new File("reporte_vendedores.csv"))) {
+        // Especificamos UTF-8 al crear el PrintWriter
+        try (PrintWriter writer = new PrintWriter(new File("reporte_vendedores.csv"), "UTF-8")) {
+            
+            // ESCRIBIR EL BOM: Esto evita el error de "Ana SÃ¡nchez" en Excel
+            writer.write('\ufeff'); 
+
             for (Map.Entry<Long, Double> entrada : lista) {
-                String nombreCompleto = nombres.get(entrada.getKey());
+                Long idVendedor = entrada.getKey();
+                String nombreCompleto = nombres.get(idVendedor);
+                Double totalRecaudado = entrada.getValue();
+
                 if (nombreCompleto != null) {
-                    writer.println(nombreCompleto + ";" + entrada.getKey() + ";" + entrada.getValue());
+                    writer.println(nombreCompleto + ";" + idVendedor + ";" + totalRecaudado);
                 }
             }
         }
@@ -99,14 +107,22 @@ public class main {
 
     private static void generarReporteProductos(Map<Integer, String[]> productos, Map<Integer, Integer> cantidades) throws IOException {
         List<Map.Entry<Integer, Integer>> lista = new ArrayList<>(cantidades.entrySet());
+        // Ordenar de mayor a menor cantidad vendida
         lista.sort((a, b) -> b.getValue().compareTo(a.getValue()));
 
-        try (PrintWriter writer = new PrintWriter(new File("reporte_productos.csv"))) {
+        // 1. Forzamos UTF-8 aquí también
+        try (PrintWriter writer = new PrintWriter(new File("reporte_productos.csv"), "UTF-8")) {
+            
+            // 2. Escribimos el carácter BOM para que Excel no se confunda
+            writer.write('\ufeff');
+
             for (Map.Entry<Integer, Integer> entrada : lista) {
                 String nombre = productos.get(entrada.getKey())[0];
                 String precio = productos.get(entrada.getKey())[1];
+                
+                // Formato: Nombre;Precio;CantidadVendida
                 writer.println(nombre + ";" + precio + ";" + entrada.getValue());
             }
         }
-    }
+    } 
 }
