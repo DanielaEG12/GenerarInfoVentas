@@ -10,6 +10,10 @@ import java.util.*;
  */
 public class Main {
 
+        // Constantes para evitar repetir nombres de archivos. Freddy Ruiz
+    private static final String ARCHIVO_PRODUCTOS = "productos_info.txt";
+    private static final String ARCHIVO_VENDEDORES = "vendedores_info.txt";
+
     public static void main(String[] args) {
         // ES: Mapas para almacenamiento global de datos en memoria
         // EN: Maps for global data storage in memory
@@ -35,6 +39,7 @@ public class Main {
             System.out.println("Finalización exitosa: Los reportes han sido generados sin errores.");
         } catch (Exception e) {
             System.err.println("Error en el procesamiento: " + e.getMessage());
+            e.printStackTrace(); // Mejora: muestra detalle del error. Freddy Ruiz
         }
     }
 
@@ -43,7 +48,7 @@ public class Main {
      * EN: Loads products from the flat file. ID is the map key.
      */
     private static void cargarProductos(Map<Integer, String[]> productos, Map<Integer, Integer> cantidades) throws IOException {
-        File file = new File("productos_info.txt");
+        File file = new File(ARCHIVO_PRODUCTOS); // Uso de constante. Freddy Ruiz
         if (!file.exists()) return;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String linea;
@@ -53,6 +58,12 @@ public class Main {
                 // EN: datos[0]=ID, datos[1]=Name, datos[2]=Price
                 productos.put(Integer.parseInt(datos[0]), new String[]{datos[1], datos[2]});
                 cantidades.put(Integer.parseInt(datos[0]), 0);
+
+                if (datos.length < 3) continue; // Validación básica. Freddy Ruiz
+
+                int id = Integer.parseInt(datos[0]);
+                productos.put(id, new String[]{datos[1], datos[2]});
+                cantidades.put(id, 0);
             }
         }
     }
@@ -62,12 +73,14 @@ public class Main {
      * EN: Maps salesman IDs with their names and prepares the sales accumulator.
      */
     private static void cargarVendedores(Map<Long, String> nombres, Map<Long, Double> totales) throws IOException {
-        File file = new File("vendedores_info.txt");
+        File file = new File(ARCHIVO_VENDEDORES); // Uso de constante. Freddy Ruiz
         if (!file.exists()) return;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(";");
+                if (datos.length < 4) continue; // Validación. Freddy Ruiz
+
                 long id = Long.parseLong(datos[1]);
                 nombres.put(id, datos[2] + " " + datos[3]);
                 totales.put(id, 0.0);
@@ -92,11 +105,18 @@ public class Main {
                 if (primeraLinea == null) continue;
                 // ES: Obtiene el ID del vendedor desde el encabezado del archivo
                 // EN: Gets the salesman ID from the file header
+
+                String[] encabezado = primeraLinea.split(";");
+                if (encabezado.length < 2) continue; // Validación. Freddy
+                
                 long idVendedor = Long.parseLong(primeraLinea.split(";")[1]);
                 double totalVentaVendedor = 0;
                 String lineaVenta;
                 while ((lineaVenta = br.readLine()) != null) {
                     String[] datos = lineaVenta.split(";");
+                    
+                    if (datos.length < 2) continue; // Validación. Freddy
+
                     int idProd = Integer.parseInt(datos[0]);
                     int cant = Integer.parseInt(datos[1]);
                     if (productos.containsKey(idProd)) {
@@ -161,6 +181,9 @@ public class Main {
             writer.write('\ufeff');
 
             for (Map.Entry<Integer, Integer> entrada : lista) {
+                
+                if (!productos.containsKey(entrada.getKey())) continue; // Validación. Freddy Ruiz
+                
                 String nombre = productos.get(entrada.getKey())[0];
                 String precio = productos.get(entrada.getKey())[1];
                 

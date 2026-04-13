@@ -13,8 +13,14 @@ public class GenerateInfoFiles {
 
   // Data to generate consistent information
   private static final String[] NOMBRES = {"Juan", "Maria", "Carlos", "Ana", "Luis", "Elena"};
-  private static final String[] APELLIDOS = {"Perez", "Gomez", "Rodriguez", "Lopez", "Garcia", "Sánchez"};
+  private static final String[] APELLIDOS = {"Perez", "Gomez", "Rodriguez", "Lopez", "Garcia", "Sanchez"};
+  // Change: The accent mark was removed from "Sánchez" to avoid encoding problems, Freddy Ruiz
+  
   private static final String[] PRODUCTOS = {"Laptop", "Mouse", "Teclado", "Monitor", "Webcam", "Impresora"};
+
+  // Change: A single reusable Random object is created. Freddy Ruiz
+  private static final Random rand = new Random();
+
 
   /**
      * Main method: The engine that starts the generation process.
@@ -40,7 +46,11 @@ public class GenerateInfoFiles {
      */
   public static void createProductsFile(int productsCount) {
     try (PrintWriter writer = new PrintWriter(new File("productos_info.txt"))) {
-      Random rand = new Random();
+
+      // Repeated creation of Random was eliminated. Freddy Ruiz
+      //Random rand = new Random();   "Este estaba lo deje como comentario por si acaso"
+
+      
       for (int i = 1; i <= productsCount; i++) {
         String nombre = PRODUCTOS[rand.nextInt(PRODUCTOS.length)] + " Mod-" + i;
         int precio = 5000 + rand.nextInt(95000);
@@ -92,7 +102,9 @@ public class GenerateInfoFiles {
       for (int i = 0; i < randomSalesCount; i++) {
         int idProd = rand.nextInt(10) + 1;
         int cant = rand.nextInt(20) + 1;
-        writer.println(idProd + ";" + cant + ";");
+        writer.println(idProd + ";" + cant);
+// The unnecessary final semicolon was removed. Freddy Ruiz
+        
       }
     } catch (IOException e) {
       System.err.println("Error al crear archivo de ventas: " + e.getMessage());
