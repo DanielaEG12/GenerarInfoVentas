@@ -6,7 +6,7 @@ import java.util.*;
  * Entrega 2 (Semana 5) - Clase Principal de Procesamiento
  * Esta clase lee los archivos generados, procesa totales y genera reportes CSV.
  * This class reads generated files, processes totals, and generates CSV reports.
- * @author Daniela Escobar, Alvaro Enrique moreno, Freddy Ruiz, Jairo Londoño
+ * @author Daniela Escobar, Alvaro Enrique moreno, Freddy Ruiz
  */
 public class Main {
 
