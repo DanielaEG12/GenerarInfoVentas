@@ -7,7 +7,7 @@ import java.util.Random;
  * Module: Fundamental Programming Concepts
  * Assignment 1 - GenerateInfoFiles (Week 3)
  * This class generates pseudo-random plain text files as input for the sales project.
- * * @author Daniela Escobar, Alvaro Enrique moreno, Freddy Ruiz, Jairo Londoño
+ * * @author Daniela Escobar, Alvaro Enrique moreno, Freddy Ruiz
  */
 public class GenerateInfoFiles {
 
