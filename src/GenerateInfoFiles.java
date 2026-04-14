@@ -7,18 +7,18 @@ import java.util.Random;
  * Module: Fundamental Programming Concepts
  * Assignment 1 - GenerateInfoFiles (Week 3)
  * This class generates pseudo-random plain text files as input for the sales project.
- * * @author Daniela Escobar, Alvaro Enrique moreno
+ * * @author Daniela Escobar, Alvaro Enrique moreno, Freddy Ruiz, Jairo Londoño
  */
 public class GenerateInfoFiles {
 
   // Data to generate consistent information
   private static final String[] NOMBRES = {"Juan", "Maria", "Carlos", "Ana", "Luis", "Elena"};
   private static final String[] APELLIDOS = {"Perez", "Gomez", "Rodriguez", "Lopez", "Garcia", "Sanchez"};
-  // Change: The accent mark was removed from "Sánchez" to avoid encoding problems, Freddy Ruiz
+  // Change: The accent mark was removed from "Sánchez" to avoid encoding problems
   
   private static final String[] PRODUCTOS = {"Laptop", "Mouse", "Teclado", "Monitor", "Webcam", "Impresora"};
 
-  // Change: A single reusable Random object is created. Freddy Ruiz
+  // Change: A single reusable Random object is created.
   private static final Random rand = new Random();
 
 
@@ -103,7 +103,7 @@ public class GenerateInfoFiles {
         int idProd = rand.nextInt(10) + 1;
         int cant = rand.nextInt(20) + 1;
         writer.println(idProd + ";" + cant);
-// The unnecessary final semicolon was removed. Freddy Ruiz
+// The unnecessary final semicolon was removed.
         
       }
     } catch (IOException e) {
